@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Belge Doğrulama</title>
+<meta charset="UTF-8">
+</head>
+
+<body style="font-family:Arial;text-align:center;margin-top:100px">
+
+<h1>Belge Doğrulama Sistemi</h1>
+
+<input type="text" id="belgeno" placeholder="Belge No Giriniz">
+
+<br><br>
+
+<button onclick="kontrol()">Doğrula</button>
+
+<p id="sonuc"></p>
+
+<script>
+
+function kontrol(){
+
+var belge = document.getElementById("belgeno").value;
+
+if(belge == "HBB-001"){
+document.getElementById("sonuc").innerHTML="✔ Belge geçerli";
+}
+else{
+document.getElementById("sonuc").innerHTML="✖ Belge bulunamadı";
+}
+
+}
+
+</script>
+
+</body>
+</html>
