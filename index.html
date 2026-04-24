@@ -58,11 +58,6 @@ body {
 
 .logo3-img { display: none; }
 
-/* Yeni Eklenen Görsellerin Masaüstünde Gizlenmesi */
-.uye600-img, .edevlet600-img {
-    display: none;
-}
-
 .header-right {
     display: flex;
     align-items: center;
@@ -179,9 +174,9 @@ body {
     border-radius: 2px;
 }
 
-/* KIZAKLI MENÜ */
+/* KIZAKLI MENÜ (SADECE MOBİL İÇİN) */
 .mobile-slide-container {
-    display: none;
+    display: none; /* Masaüstünde kapalı */
     position: absolute;
     top: 70px;
     left: 0;
@@ -195,7 +190,7 @@ body {
 }
 
 .mobile-slide-container.active {
-    max-height: 1000px;
+    max-height: 1000px; /* Kızak gibi inmesini sağlar */
 }
 
 .mobile-slide-img { width: 100%; display: block; }
@@ -209,60 +204,50 @@ body {
     .sidebar { display: none !important; }
     .header-right { display: none; }
     .mobile-menu-btn { display: flex; }
-    .mobile-slide-container { display: block; }
+    .mobile-slide-container { display: block; } /* Container aktif hale gelir ama max-height 0 olduğu için görünmez */
     
     .main { padding: 10px; }
     .card { width: 100%; margin-left: 0; padding: 15px; }
     .pdf-container { height: 75vh; }
     .page-title { margin-left: 5px; font-size: 16px; }
 }
-
-/* 600PX ALTI */
+    
+/*
 @media (max-width: 600px) {
-    /* Mevcut logoları gizle */
-    .arkalogo-img, .logo-img {
+    .pdf-container { display: none !important; }
+    .mobile-pdf-warning { display: block !important; }
+    .card { min-height: auto; }
+}
+    
+*/
+
+@media (max-width: 600px) {
+    
+    .arkalogo-img .logo-img {
         display: none !important;
     }
     
     .logo3-img {
         display: block !important;
         position: absolute;
-        top: -35px;
-        left: -35px;
-        height: 77px;
+        top: -35px;      /* Yukarıdan mesafe (istediğin gibi değiştir) */
+        left: -35px;     /* Soldan mesafe (istediğin gibi değiştir) */
+        height: 77px;   /* Mobildeki yüksekliği */
         width: auto;
-        z-index: 1001;
+        z-index: 1001;  /* En üstte kalması için */
     }
 
-    /* Yeni İkonlar: En sağ üst ve yan yana */
-    .uye600-img {
-        display: block !important;
-        position: absolute;
-        top: 22px;
-        right: 60px; /* Menü butonunun solunda */
-        height: 28px;
-        width: auto;
-        z-index: 1002;
-    }
-
-    .edevlet600-img {
-        display: block !important;
-        position: absolute;
-        top: 22px;
-        right: 125px; /* Üye ikonunun solunda */
-        height: 28px;
-        width: auto;
-        z-index: 1002;
-    }
-
+    /* Yazının logoyla çakışmaması için gerekirse alanı kaydır */
     .logo-area {
-        padding-left: 70px;
+        padding-left: 70px; /* Logonun genişliğine göre burayı artır/azalt */
     }
 
+    /* PDF uyarısı ve diğer mevcut 600px kodların burada kalmaya devam etsin */
     .pdf-container { display: none !important; }
     .mobile-pdf-warning { display: block !important; }
     .card { min-height: auto; }
 }
+
     
 </style>
 </head>
@@ -274,9 +259,6 @@ body {
         <img src="logo.png" class="logo-img">
         <img src="arkalogo.png" class="arkalogo-img">
         <img src="logo3.png" class="logo3-img">
-        <img src="edevlet600.png" class="edevlet600-img">
-        <img src="uye600.png" class="uye600-img">
-        SAMANDAĞ BELEDİYESİ
     </div>
 
     <div class="header-right">
@@ -293,7 +275,7 @@ body {
         <span></span><span></span><span></span>
     </div>
 </div>
-
+    
 <div id="slideMenu" class="mobile-slide-container">
     <img src="media1000slidebar.png" alt="Mobil Menü" class="mobile-slide-img">
 </div>
@@ -313,9 +295,9 @@ body {
                 <embed src="Evrak.pdf" type="application/pdf" width="100%" height="100%" />
             </div>
 
-            <div class="mobile-pdf-warning" style="display:none;">
+              <div class="mobile-pdf-warning">
                 This browser does not support inline PDFs. Please download the PDF to view it: <a href="Evrak.pdf" target="_blank">Download PDF</a>
-            </div>
+          </div>
             
         </div>
     </div>
@@ -326,11 +308,13 @@ body {
 <script>
 function toggleMenu() {
     const slideMenu = document.getElementById('slideMenu');
+    // Sadece ekran 1000px altındaysa çalışır
     if (window.innerWidth <= 1000) {
         slideMenu.classList.toggle('active');
     }
 }
 
+// Ekran büyütüldüğünde menüyü otomatik kapat
 window.addEventListener('resize', function() {
     if (window.innerWidth > 1000) {
         document.getElementById('slideMenu').classList.remove('active');
