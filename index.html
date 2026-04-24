@@ -58,6 +58,11 @@ body {
 
 .logo3-img { display: none; }
 
+/* Yeni Eklenen Görsellerin Masaüstünde Gizlenmesi */
+.uye600-img, .edevlet600-img {
+    display: none;
+}
+
 .header-right {
     display: flex;
     align-items: center;
@@ -110,7 +115,7 @@ body {
     margin-left: -6px; 
 }
 
-/* KART - AKIŞKAN VE ORANTILI AYAR */
+/* KART */
 .card {
     background: #fff;
     border-radius: 4px;
@@ -120,8 +125,9 @@ body {
     border: 1px solid #eee;
     margin-top: 8px; 
     margin-left: -7px; 
-    width: 97%;   
-    box-sizing: border-box; /* Padding'in genişliği bozmasını engeller */
+    width: calc(97% + 7px);
+    max-width: 100%; 
+    box-sizing: border-box; 
 }
 
 .y-buton-img {
@@ -150,18 +156,6 @@ body {
     overflow: hidden;
 }
 
-/* MEDIA 600 BÜYÜK YAZI */
-.mobile-text {
-    display: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 32px;
-    font-weight: 400;
-    color: #6c757d;
-    text-align: left;
-    margin-top: 40px;
-    letter-spacing: 1px;
-}
-
 /* MOBİL BUTON */
 .mobile-menu-btn {
     display: none;
@@ -185,64 +179,91 @@ body {
     border-radius: 2px;
 }
 
+/* KIZAKLI MENÜ */
+.mobile-slide-container {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 998;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.mobile-slide-container.active {
+    max-height: 1000px;
+}
+
+.mobile-slide-img { width: 100%; display: block; }
+
 /* --- MEDYA SORGULARI --- */
 
-/* --- 1000PX VE ALTI İÇİN MEDYA SORGUSU --- */
+/* 1000PX ALTI */
 @media (max-width: 1000px) {
-    .logo-img, .logo2-img {
+    .logo-img, .arkalogo-img { display: none !important; }
+    .logo3-img { display: block !important; }
+    .sidebar { display: none !important; }
+    .header-right { display: none; }
+    .mobile-menu-btn { display: flex; }
+    .mobile-slide-container { display: block; }
+    
+    .main { padding: 10px; }
+    .card { width: 100%; margin-left: 0; padding: 15px; }
+    .pdf-container { height: 75vh; }
+    .page-title { margin-left: 5px; font-size: 16px; }
+}
+
+/* 600PX ALTI */
+@media (max-width: 600px) {
+    /* Mevcut logoları gizle */
+    .arkalogo-img, .logo-img {
         display: none !important;
     }
+    
     .logo3-img {
         display: block !important;
+        position: absolute;
+        top: -35px;
+        left: -35px;
+        height: 77px;
+        width: auto;
+        z-index: 1001;
     }
 
-    .sidebar {
-        display: none !important;
+    /* Yeni İkonlar: En sağ üst ve yan yana */
+    .uye600-img {
+        display: block !important;
+        position: absolute;
+        top: 22px;
+        right: 60px; /* Menü butonunun solunda */
+        height: 28px;
+        width: auto;
+        z-index: 1002;
     }
 
-    .header-right .ed-btn, 
-    .header-right span {
-        display: none;
-    }
-    
-    .header-right {
-        padding-right: 0;
-    }
-
-    .mobile-menu-btn {
-        display: flex; /* Artık çizgiler görünecek */
-    }
-    
-    .main {
-        padding: 10px;
-    }
-    
-    .card {
-        width: 100%;
-        margin-left: 0;
-        padding: 15px;
+    .edevlet600-img {
+        display: block !important;
+        position: absolute;
+        top: 22px;
+        right: 125px; /* Üye ikonunun solunda */
+        height: 28px;
+        width: auto;
+        z-index: 1002;
     }
 
-    .pdf-container {
-        height: 80vh; /* Mobilde yüksekliği ekran boyuna göre ayarlar */
+    .logo-area {
+        padding-left: 70px;
     }
 
-    .page-title {
-        margin-left: 5px;
-        font-size: 16px;
-    }
-}
-
-/* 600PX VE ALTI: YAZI DÜZELTMESİ */
-@media (max-width: 600px) {
     .pdf-container { display: none !important; }
-    .mobile-text { 
-        display: block !important; 
-        visibility: visible !important;
-    }
-    .card { padding-bottom: 60px; }
-    .page-title { display: none; }
+    .mobile-pdf-warning { display: block !important; }
+    .card { min-height: auto; }
 }
+    
 </style>
 </head>
 
@@ -253,6 +274,8 @@ body {
         <img src="logo.png" class="logo-img">
         <img src="arkalogo.png" class="arkalogo-img">
         <img src="logo3.png" class="logo3-img">
+        <img src="edevlet600.png" class="edevlet600-img">
+        <img src="uye600.png" class="uye600-img">
         SAMANDAĞ BELEDİYESİ
     </div>
 
@@ -271,8 +294,12 @@ body {
     </div>
 </div>
 
+<div id="slideMenu" class="mobile-slide-container">
+    <img src="media1000slidebar.png" alt="Mobil Menü" class="mobile-slide-img">
+</div>
+
 <div class="main">
-    <div class="sidebar" id="mobileSidebar">
+    <div class="sidebar">
         <img src="sol_menu.png" alt="Menü" class="sidebar-img">
     </div>
 
@@ -286,7 +313,10 @@ body {
                 <embed src="Evrak.pdf" type="application/pdf" width="100%" height="100%" />
             </div>
 
-            <div class="mobile-text">BELGE DOĞRULAMA</div>
+            <div class="mobile-pdf-warning" style="display:none;">
+                This browser does not support inline PDFs. Please download the PDF to view it: <a href="Evrak.pdf" target="_blank">Download PDF</a>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -295,13 +325,17 @@ body {
 
 <script>
 function toggleMenu() {
-    const sidebar = document.getElementById('mobileSidebar');
-    if(sidebar.style.display === "block") {
-        sidebar.style.display = "none";
-    } else {
-        sidebar.style.display = "block";
+    const slideMenu = document.getElementById('slideMenu');
+    if (window.innerWidth <= 1000) {
+        slideMenu.classList.toggle('active');
     }
 }
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 1000) {
+        document.getElementById('slideMenu').classList.remove('active');
+    }
+});
 </script>
 
 </body>
